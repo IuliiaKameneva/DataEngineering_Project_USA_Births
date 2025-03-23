@@ -1,0 +1,393 @@
+version: 2
+
+sources:
+  - name: staging
+    database: fair-canto-447119-p5
+    schema: project_dataset
+    tables:
+      - name: county_natality
+      - name: county_natality_by_abnormal_conditions
+      - name: county_natality_by_congenital_abnormalities
+      - name: county_natality_by_payment
+      - name: county_natality_by_father_race
+      - name: county_natality_by_maternal_morbidity
+      - name: county_natality_by_mother_race
+
+
+models:
+  - name: stg_county_natality
+    description: ""
+    columns:
+      - name: record_id
+        data_type: string
+        description: ""
+
+      - name: year
+        data_type: int64
+        description: ""
+
+      - name: county_of_residence
+        data_type: string
+        description: ""
+
+      - name: county_of_residence_fips
+        data_type: int64
+        description: ""
+
+      - name: births
+        data_type: int64
+        description: ""
+
+      - name: ave_age_of_mother
+        data_type: float64
+        description: ""
+
+      - name: ave_oe_gestational_age_wks
+        data_type: float64
+        description: ""
+
+      - name: ave_lmp_gestational_age_wks
+        data_type: float64
+        description: ""
+
+      - name: ave_birth_weight_gms
+        data_type: float64
+        description: ""
+
+      - name: ave_pre_pregnancy_bmi
+        data_type: float64
+        description: ""
+
+      - name: ave_number_of_prenatal_wks
+        data_type: float64
+        description: ""
+
+  - name: stg_county_natality_by_abnormal_conditions
+    description: ""
+    columns:
+      - name: record_id
+        data_type: string
+        description: ""
+
+      - name: year
+        data_type: int64
+        description: ""
+
+      - name: county_of_residence
+        data_type: string
+        description: ""
+
+      - name: county_of_residence_fips
+        data_type: int64
+        description: ""
+
+      - name: abnormal_conditions_checked_desc
+        data_type: string
+        description: ""
+
+      - name: abnormal_conditions_checked_yn
+        data_type: int64
+        description: ""
+
+      - name: births
+        data_type: int64
+        description: ""
+
+      - name: ave_age_of_mother
+        data_type: float64
+        description: ""
+
+      - name: ave_oe_gestational_age_wks
+        data_type: float64
+        description: ""
+
+      - name: ave_lmp_gestational_age_wks
+        data_type: float64
+        description: ""
+
+      - name: ave_birth_weight_gms
+        data_type: float64
+        description: ""
+
+      - name: ave_pre_pregnancy_bmi
+        data_type: float64
+        description: ""
+
+      - name: ave_number_of_prenatal_wks
+        data_type: float64
+        description: ""
+
+  - name: stg_county_natality_by_congenital_abnormalities
+    description: ""
+    columns:
+      - name: record_id
+        data_type: string
+        description: ""
+
+      - name: year
+        data_type: int64
+        description: ""
+
+      - name: county_of_residence
+        data_type: string
+        description: ""
+
+      - name: county_of_residence_fips
+        data_type: int64
+        description: ""
+
+      - name: congenital_abnormality_checked_desc
+        data_type: string
+        description: ""
+
+      - name: congenital_abnormality_checked_yn
+        data_type: int64
+        description: ""
+
+      - name: births
+        data_type: int64
+        description: ""
+
+      - name: ave_age_of_mother
+        data_type: float64
+        description: ""
+
+      - name: ave_oe_gestational_age_wks
+        data_type: float64
+        description: ""
+
+      - name: ave_lmp_gestational_age_wks
+        data_type: float64
+        description: ""
+
+      - name: ave_birth_weight_gms
+        data_type: float64
+        description: ""
+
+      - name: ave_pre_pregnancy_bmi
+        data_type: float64
+        description: ""
+
+      - name: ave_number_of_prenatal_wks
+        data_type: float64
+        description: ""
+
+  - name: stg_county_natality_by_payment
+    description: ""
+    columns:
+      - name: record_id
+        data_type: string
+        description: ""
+
+      - name: year
+        data_type: int64
+        description: ""
+
+      - name: county_of_residence
+        data_type: string
+        description: ""
+
+      - name: county_of_residence_fips
+        data_type: int64
+        description: ""
+
+      - name: source_of_payment
+        data_type: string
+        description: ""
+
+      - name: source_of_payment_code
+        data_type: int64
+        description: ""
+
+      - name: births
+        data_type: int64
+        description: ""
+
+      - name: ave_age_of_mother
+        data_type: float64
+        description: ""
+
+      - name: ave_oe_gestational_age_wks
+        data_type: float64
+        description: ""
+
+      - name: ave_lmp_gestational_age_wks
+        data_type: float64
+        description: ""
+
+      - name: ave_birth_weight_gms
+        data_type: float64
+        description: ""
+
+      - name: ave_pre_pregnancy_bmi
+        data_type: float64
+        description: ""
+
+      - name: ave_number_of_prenatal_wks
+        data_type: float64
+        description: ""
+
+  - name: stg_county_natality_by_father_race
+    description: ""
+    columns:
+      - name: record_id
+        data_type: string
+        description: ""
+
+      - name: year
+        data_type: int64
+        description: ""
+
+      - name: county_of_residence
+        data_type: string
+        description: ""
+
+      - name: county_of_residence_fips
+        data_type: int64
+        description: ""
+
+      - name: fathers_single_race
+        data_type: string
+        description: ""
+
+      - name: fathers_single_race_code
+        data_type: int64
+        description: ""
+
+      - name: births
+        data_type: int64
+        description: ""
+
+      - name: ave_age_of_mother
+        data_type: float64
+        description: ""
+
+      - name: ave_oe_gestational_age_wks
+        data_type: float64
+        description: ""
+
+      - name: ave_lmp_gestational_age_wks
+        data_type: float64
+        description: ""
+
+      - name: ave_birth_weight_gms
+        data_type: float64
+        description: ""
+
+      - name: ave_pre_pregnancy_bmi
+        data_type: float64
+        description: ""
+
+      - name: ave_number_of_prenatal_wks
+        data_type: float64
+        description: ""
+
+  - name: stg_county_natality_by_maternal_morbidity
+    description: ""
+    columns:
+      - name: record_id
+        data_type: string
+        description: ""
+
+      - name: year
+        data_type: int64
+        description: ""
+
+      - name: county_of_residence
+        data_type: string
+        description: ""
+
+      - name: county_of_residence_fips
+        data_type: int64
+        description: ""
+
+      - name: maternal_morbidity_desc
+        data_type: string
+        description: ""
+
+      - name: maternal_morbidity_yn
+        data_type: int64
+        description: ""
+
+      - name: births
+        data_type: int64
+        description: ""
+
+      - name: ave_age_of_mother
+        data_type: float64
+        description: ""
+
+      - name: ave_oe_gestational_age_wks
+        data_type: float64
+        description: ""
+
+      - name: ave_lmp_gestational_age_wks
+        data_type: float64
+        description: ""
+
+      - name: ave_birth_weight_gms
+        data_type: float64
+        description: ""
+
+      - name: ave_pre_pregnancy_bmi
+        data_type: float64
+        description: ""
+
+      - name: ave_number_of_prenatal_wks
+        data_type: float64
+        description: ""
+
+  - name: stg_county_natality_by_mother_race
+    description: ""
+    columns:
+      - name: record_id
+        data_type: string
+        description: ""
+
+      - name: year
+        data_type: int64
+        description: ""
+
+      - name: county_of_residence
+        data_type: string
+        description: ""
+
+      - name: county_of_residence_fips
+        data_type: int64
+        description: ""
+
+      - name: mothers_single_race
+        data_type: string
+        description: ""
+
+      - name: mothers_single_race_code
+        data_type: int64
+        description: ""
+
+      - name: births
+        data_type: int64
+        description: ""
+
+      - name: ave_age_of_mother
+        data_type: float64
+        description: ""
+
+      - name: ave_oe_gestational_age_wks
+        data_type: float64
+        description: ""
+
+      - name: ave_lmp_gestational_age_wks
+        data_type: float64
+        description: ""
+
+      - name: ave_birth_weight_gms
+        data_type: float64
+        description: ""
+
+      - name: ave_pre_pregnancy_bmi
+        data_type: float64
+        description: ""
+
+      - name: ave_number_of_prenatal_wks
+        data_type: float64
+        description: ""

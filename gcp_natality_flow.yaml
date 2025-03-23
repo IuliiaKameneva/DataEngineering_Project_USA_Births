@@ -1,0 +1,116 @@
+id: bigquery_extraction_flow
+namespace: final_project
+
+inputs:
+  - id: tables
+    type: JSON
+    description: "List of BigQuery tables to extract data from"
+    defaults: ["county_natality", "county_natality_by_abnormal_conditions", "county_natality_by_congenital_abnormalities", "county_natality_by_payment", "county_natality_by_father_race", "county_natality_by_maternal_morbidity", "county_natality_by_mother_race"]
+
+  - id: dbt_command
+    type: SELECT
+    allowCustomValue: true
+    defaults: dbt build
+    values:
+      - dbt build
+      - dbt debug # use when running the first time to validate DB connection
+
+
+tasks:
+  - id: if_dbt_build
+    type: io.kestra.plugin.core.flow.If
+    condition: "{{inputs.dbt_command == 'dbt build'}}"
+    then:
+
+    - id: iterate_over_tables
+      type: io.kestra.plugin.core.flow.EachSequential  # Execute tables in parallel
+      value: "{{ inputs.tables }}"
+      tasks:
+        - id: extract_data_from_bigquery
+          type: io.kestra.plugin.gcp.bigquery.Query
+          description: "Извлечь данные из BigQuery Public Dataset"
+          projectId: "{{ kv('GCP_PROJECT_ID') }}"
+          sql: |
+            SELECT *
+            FROM `bigquery-public-data.sdoh_cdc_wonder_natality.{{ taskrun.value }}`
+            # LIMIT 100
+          store: true
+
+        - id: convert_data_to_csv
+          type: io.kestra.plugin.serdes.csv.IonToCsv
+          from: "{{ outputs.extract_data_from_bigquery[taskrun.value].uri }}"
+
+        - id: upload_to_gcs
+          type: io.kestra.plugin.gcp.gcs.Upload
+          description: "Загрузить данные в Google Cloud Storage"
+          from: "{{ outputs.convert_data_to_csv[taskrun.value].uri }}"
+          to:  "gs://{{kv('GCP_BUCKET_NAME')}}/{{taskrun.value}}"  # Укажите ваш GCS bucket и путь
+
+        - id: create_external_table
+          type: io.kestra.plugin.gcp.bigquery.Query
+          sql: |
+            CREATE OR REPLACE EXTERNAL TABLE `{{kv('GCP_PROJECT_ID')}}.{{kv('GCP_DATASET')}}.{{taskrun.value}}`
+            OPTIONS (
+              format = 'csv',
+              uris = ['gs://{{kv('GCP_BUCKET_NAME')}}/{{taskrun.value}}']
+            );
+
+    else:
+    - id: sync
+      type: io.kestra.plugin.git.SyncNamespaceFiles
+      url: https://github.com/IuliiaKameneva/zoomcamp2025
+      branch: main
+      namespace: "{{flow.namespace}}"
+      gitDirectory: Project/dbt
+      dryRun: false
+      disabled: false # this Git Sync is needed only when running it the first time, afterwards the task can be disabled
+  
+  - id: dbt-build
+    type: io.kestra.plugin.dbt.cli.DbtCLI
+    env:
+      DBT_DATABASE: "{{kv('GCP_PROJECT_ID')}}"
+      DBT_SCHEMA: "{{kv('GCP_DATASET')}}"
+    namespaceFiles:
+      enabled: true
+    containerImage: ghcr.io/kestra-io/dbt-bigquery:latest
+    taskRunner:
+      type: io.kestra.plugin.scripts.runner.docker.Docker
+    inputFiles:
+      sa.json: "{{kv('GCP_CREDS')}}"
+    commands:
+      - dbt deps
+      - "{{ inputs.dbt_command }}"
+    storeManifest:
+      key: manifest.json
+      namespace: "{{ flow.namespace }}"
+    profiles: |
+      default:
+        outputs:
+          dev:
+            type: bigquery
+            dataset: "{{kv('GCP_DATASET')}}"
+            project: "{{kv('GCP_PROJECT_ID')}}"
+            location: "{{kv('GCP_LOCATION')}}"
+            keyfile: sa.json
+            method: service-account
+            priority: interactive
+            threads: 16
+            timeout_seconds: 300
+            fixed_retries: 1
+        target: dev
+
+pluginDefaults:
+  - type: io.kestra.plugin.gcp
+    values:
+      serviceAccount: "{{kv('GCP_CREDS')}}"
+      projectId: "{{kv('GCP_PROJECT_ID')}}"
+      location: "{{kv('GCP_LOCATION')}}"
+      bucket: "{{kv('GCP_BUCKET_NAME')}}"
+      dataset: "{{kv('GCP_DATASET')}}"
+      
+triggers:
+  - id: example_trigger
+    type: io.kestra.plugin.core.trigger.Schedule
+    cron: "* * * */1 *"  # Запускать каждую минуту
+    backfill:
+      start: "2023-10-01T00:00:00Z"  # Укажите дату в прошлом
