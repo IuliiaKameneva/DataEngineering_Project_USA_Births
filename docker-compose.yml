@@ -93,7 +93,7 @@ services:
       timeout: 5s
       retries: 3
     ports:
-      - "8090:8080"
+      - "8080:8080"
       - "8081:8081"
     depends_on:
       postgres:

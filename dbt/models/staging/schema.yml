@@ -2,8 +2,8 @@ version: 2
 
 sources:
   - name: staging
-    database: fair-canto-447119-p5
-    schema: project_dataset
+    database: "{{ target.project }}"
+    schema: "{{ target.dataset }}"
     tables:
       - name: county_natality
       - name: county_natality_by_abnormal_conditions

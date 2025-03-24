@@ -1,0 +1,5 @@
+essential_data/*
+terraform.tfstate.backup
+terraform.tfstate
+tfplan
+.terraform.lock.hcl

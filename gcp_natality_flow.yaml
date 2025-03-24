@@ -58,10 +58,10 @@ tasks:
     else:
     - id: sync
       type: io.kestra.plugin.git.SyncNamespaceFiles
-      url: https://github.com/IuliiaKameneva/zoomcamp2025
+      url: https://github.com/IuliiaKameneva/DataEngineering_Project_USA_Births
       branch: main
       namespace: "{{flow.namespace}}"
-      gitDirectory: Project/dbt
+      gitDirectory: dbt
       dryRun: false
       disabled: false # this Git Sync is needed only when running it the first time, afterwards the task can be disabled
   
