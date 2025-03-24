@@ -29,11 +29,7 @@ This project demonstrates end-to-end data engineering skills, from infrastructur
 
 - Git
 - Google Cloud Platform Account
-<<<<<<< HEAD
-    - Empty project and credentials for this project
-=======
     - Empty project and credentials for this project with BigQuery Admin and Storage Admin permissions
->>>>>>> 84eb3ee (Some bugs with variables transfer from Terraform to Kestra are fixedxexed)
 - Docker
 
 ## Deployment Architecture
@@ -55,11 +51,7 @@ $ bash env_script.sh essential_data/google-credentials.json
 ```
 Add your project_id in file `variables.tf` in the variable `project`. Run
 ```
-<<<<<<< HEAD
-$ docker-compose up
-=======
 $ docker-compose up --build
->>>>>>> 84eb3ee (Some bugs with variables transfer from Terraform to Kestra are fixedxexed)
 ```
 This Docker Compose file is responsible for the complete deployment of the project: Terraform creates all the necessary infrastructure (provisioning cloud resources such as buckets and databases, and creating flows for Kestra).
 
@@ -80,14 +72,11 @@ It's the main execution. By trigger it will execute every month, but you need to
 - create_external_table: creates the external tables for further processing 
 - runs dbt for data processing
 
-<<<<<<< HEAD
-=======
 To close the execution stop docker compose and run
 ```
 $ docker compose down -v
 ```
 
->>>>>>> 84eb3ee (Some bugs with variables transfer from Terraform to Kestra are fixedxexed)
 ## Dashboard Visualization
 After successfull flow execution you can visualize the data like in the report [https://lookerstudio.google.com/reporting/b6746fc0-fd70-4e38-88fa-a4ba20d15288](https://lookerstudio.google.com/reporting/b6746fc0-fd70-4e38-88fa-a4ba20d15288)
 
