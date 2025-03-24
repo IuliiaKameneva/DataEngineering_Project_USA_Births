@@ -41,13 +41,13 @@ The whole architecture is shown in the picture below:
 
 For the beginning run
 ```bash
-$ git clone https://github.com/IuliiaKameneva/zoomcamp2025.git
-$ cd zoomcamp2025/Project/
+$ git clone https://github.com/IuliiaKameneva/DataEngineering_Project_USA_Births.git
+$ cd DataEngineering_Project_USA_Births/
 $ mkdir essential_data
 ```
 Put into the folder `essential_data` json-file with google account credentials. Then run
 ```
-$ bash env_script.sh essential_data/google-credentials.json
+$ bash env_script.sh essential_data/<NAME_OF_YOUR_CREDENTIALS_FILE>.json
 ```
 Add your project_id in file `variables.tf` in the variable `project`. Run
 ```
