@@ -111,6 +111,6 @@ pluginDefaults:
 triggers:
   - id: example_trigger
     type: io.kestra.plugin.core.trigger.Schedule
-    cron: "* * * */1 *"  # Запускать каждую минуту
+    cron: "0 0 * * *"  # Dayly run
     backfill:
-      start: "2023-10-01T00:00:00Z"  # Укажите дату в прошлом
+      start: "2023-10-01T00:00:00Z"  # 
