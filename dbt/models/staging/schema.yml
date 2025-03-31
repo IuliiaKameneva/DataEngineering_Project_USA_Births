@@ -25,6 +25,10 @@ models:
       - name: year
         data_type: int64
         description: ""
+      
+      - name: year_date
+        data_type: date
+        description: ""
 
       - name: county_of_residence
         data_type: string
@@ -67,6 +71,10 @@ models:
     columns:
       - name: record_id
         data_type: string
+        description: ""
+            
+      - name: year_date
+        data_type: date
         description: ""
 
       - name: year

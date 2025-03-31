@@ -12,7 +12,10 @@ renamed as (
 
     select
         {{ dbt_utils.generate_surrogate_key(['Year', 'County_of_Residence_FIPS']) }} as record_id,
-        EXTRACT(YEAR FROM Year) AS year,
+        -- SAFE_CAST(Year AS DATE) AS year,
+        DATE(EXTRACT(YEAR FROM CAST(Year AS DATE)), 1, 1) AS year_date,
+        EXTRACT(YEAR FROM CAST(Year AS DATE)) AS year,
+        -- EXTRACT(YEAR FROM Year) AS year,
         county_of_residence,
         {{ dbt.safe_cast("county_of_residence_fips", api.Column.translate_type("integer")) }} as county_of_residence_fips,
         cast(births as numeric) as births,
