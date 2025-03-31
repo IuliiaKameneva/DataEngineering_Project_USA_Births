@@ -100,6 +100,17 @@ The whole architecture is shown in the picture below:
      4. Creates external BigQuery tables
      5. Executes dbt transformations
 
+9. **Scheduling and Maintenance**:
+- The workflow is automatically scheduled to run dayly
+- Manual execution is only required for the initial setup
+
+10. **Shutdown Procedure**:
+- To stop the environment:
+```bash
+docker compose down -v
+```
+**Note**: The `-v` flag will remove all Docker volumes, including the PostgreSQL database. Omit this flag if you want to preserve execution history between deployments.
+
 ### Partitioning & Clustering
 BigQuery tables are optimized using:
 ```sql
@@ -118,6 +129,10 @@ This improves query performance by reducing the amount of scanned data.
 
 ## Dashboard Visualization
 The processed data is visualized in an interactive [Looker Studio report](https://lookerstudio.google.com/reporting/b6746fc0-fd70-4e38-88fa-a4ba20d15288), showcasing birth trends across demographics.
+
+It can looks like
+![Report page 1](img/report_page1.png)
+![Report page 2](img/report_page2.png)
 
 ## Summary
 This project meets key data engineering criteria:
